@@ -8,7 +8,6 @@ public class Movie {
 	public Movie(String name) {
 		this.name = name;
 		this.actors = new ArrayList <Actor>();
-		//this.rating = 0.0;
 	}
 	public Movie(String name, String[] actorNames) {
 		this.name = name;
@@ -17,7 +16,6 @@ public class Movie {
 			if (!getActorNamesAsStrings().contains(a)) {
 				actors.add(new Actor(a));
 			}
-			
 		}
 	}
 	public String getName() {
@@ -54,9 +52,7 @@ public class Movie {
 		}
 		return s.toString();
 	}
-	/* (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
-	 */
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -64,9 +60,7 @@ public class Movie {
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		return result;
 	}
-	/* (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {

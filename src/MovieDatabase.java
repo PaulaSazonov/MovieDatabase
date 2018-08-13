@@ -199,13 +199,14 @@ public class MovieDatabase {
 		}
 	}
 	/**
-	 * A method which connects the Movie objects with Actor objects, by checking if a connection is found by name in the database and then adding the Actor object into a Movie object's list of actors.
+	 * A method which connects the Movie objects with Actor objects, by checking if a Movie is found in the database and then adding the Actor object into a Movie object's list of actors.
 	 */
 	public void connectMoviesWithActors() {
 		for (Movie m : this.movieList) {
 			for (Actor a : this.actorList) {
 				for (Movie am : a.getMovies()) {
-					if (am.getName().equals(m.getName())) {
+					if (am.equals(m)) {
+						am.setRating(m.getRating());
 						m.actors.add(a);
 					}
 				}
@@ -216,7 +217,8 @@ public class MovieDatabase {
 		for (Actor a : this.actorList) {
 			for (Movie m : this.movieList) {
 				for (Actor ma : m.getActors()) {
-					if (ma.getName().equals(a.getName())) {
+					if (ma.equals(a)) {
+						
 						a.movies.add(m);
 					}
 				}
@@ -232,19 +234,20 @@ public class MovieDatabase {
 		movieDatabase.setRatingsFromData(movieDatabase.mapRatingsFileData(movieDatabase.dataFromRatingsFile()));
 
 		movieDatabase.connectMoviesWithActors();
-		movieDatabase.connectActorsWithMovies();
-
-		/*		String[] test = new String[] {"Amy Adams", "Meryl Streep", "Jennifer Lawrence"};
-		movieDatabase.addMovie("Testmovie", test);*/
+		//movieDatabase.connectActorsWithMovies();
 
 
-		/*		for (Movie a : movieDatabase.movieList) {
+/*		for (Movie a : movieDatabase.movieList) {
 			System.out.println(a);
 		}*/
 
 		for (Actor a : movieDatabase.actorList) {
 			System.out.println(a);
 		}
+
+
+		
+		
 
 
 
