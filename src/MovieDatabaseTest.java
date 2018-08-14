@@ -69,7 +69,6 @@ public class MovieDatabaseTest {
 		assertTrue(basey.getMovieList().contains(basey.getMovie("Troy")));
 		assertTrue(basey.getActorList().contains(basey.getActor("Brad Pitt")));
 		
-		
 	}
 
 }

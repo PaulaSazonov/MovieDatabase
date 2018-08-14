@@ -321,16 +321,5 @@ public class MovieDatabase {
 
 		movieDatabase.connectMoviesWithActors();
 
-		/*
-		 * for (Movie a : movieDatabase.movieList) { System.out.println(a); }
-		 */
-
-		/*
-		 * for (Actor a : movieDatabase.actorList) { System.out.println(a.getName() +
-		 * a.movies); }
-		 */
-
-		System.out.println(movieDatabase.getMovie("Fools Rush In"));
-
 	}
 }
