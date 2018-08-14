@@ -4,38 +4,46 @@ public class Movie {
 	private String name;
 	ArrayList<Actor> actors;
 	double rating;
-	
+
 	public Movie(String name) {
 		this.name = name;
-		this.actors = new ArrayList <Actor>();
+		this.actors = new ArrayList<Actor>();
 	}
+
 	public Movie(String name, String[] actorNames) {
 		this.name = name;
-		this.actors = new ArrayList <Actor>();
+		this.actors = new ArrayList<Actor>();
 		for (String a : actorNames) {
 			if (!getActorNamesAsStrings().contains(a)) {
 				actors.add(new Actor(a));
 			}
 		}
 	}
-	//Getters and Setters
+
+	// Getters and Setters
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	public double getRating() {
 		return rating;
 	}
+
 	public void setRating(double rating) {
 		this.rating = rating;
 	}
+
 	public ArrayList<Actor> getActors() {
 		return actors;
 	}
+
 	/**
 	 * A helper method
+	 * 
 	 * @return a list of actors' names as Strings is returned
 	 */
 	public ArrayList<String> getActorNamesAsStrings() {
@@ -45,11 +53,13 @@ public class Movie {
 		}
 		return actorNames;
 	}
+
 	@Override
 	public String toString() {
-		return  name + ", actors: " + actorNamesAsString() + ", rating: " + rating ;
+		return name + ", actors: " + actorNamesAsString() + ", rating: " + rating;
 	}
-	//For printing out stuff on the console in test purposes
+
+	// For printing out stuff on the console in test purposes
 	public String actorNamesAsString() {
 		StringBuilder s = new StringBuilder();
 		for (Actor a : this.actors) {
@@ -57,7 +67,10 @@ public class Movie {
 		}
 		return s.toString();
 	}
-	//For the purposes of this exercise, it is sufficient that the Movies match in name to be considered the same object, therefore equals and hashcode are overridden to avoid duplicates
+
+	// For the purposes of this exercise, it is sufficient that the Movies match in
+	// name to be considered the same object, therefore equals and hashcode are
+	// overridden to avoid duplicates
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -65,6 +78,7 @@ public class Movie {
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {

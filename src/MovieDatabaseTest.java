@@ -40,6 +40,35 @@ public class MovieDatabaseTest {
 	}
 	@Test
 	public void testGetBestActor() {
+		basey.makeActorsAndMoviesOutOfData(basey.mapMovieFileData(basey.dataFromMovieFile()));
+		basey.setRatingsFromData(basey.mapRatingsFileData(basey.dataFromRatingsFile()));
+		basey.connectMoviesWithActors();
+		
+		assertFalse(basey.getBestActor().isEmpty());
+		assertTrue(basey.getActorListAsStringsOfNames().contains(basey.getBestActor()));
+		assertTrue(basey.getActor(basey.getBestActor()).getActorsRating() == 100.0);
+	}
+	@Test
+	public void testGetBestMovie() {
+		basey.makeActorsAndMoviesOutOfData(basey.mapMovieFileData(basey.dataFromMovieFile()));
+		basey.setRatingsFromData(basey.mapRatingsFileData(basey.dataFromRatingsFile()));
+		basey.connectMoviesWithActors();
+		
+		assertFalse(basey.getBestMovie().isEmpty());
+		assertTrue(basey.getMovieListAsStringsOfNames().contains(basey.getBestMovie()));
+		assertTrue(basey.getMovie(basey.getBestMovie()).getRating() == 100.0);
+	}
+	@Test
+	public void testObjectConnections () {
+		basey.makeActorsAndMoviesOutOfData(basey.mapMovieFileData(basey.dataFromMovieFile()));
+		basey.setRatingsFromData(basey.mapRatingsFileData(basey.dataFromRatingsFile()));
+		basey.connectMoviesWithActors();
+		
+		assertTrue(basey.getMovie("Troy").getActorNamesAsStrings().contains("Brad Pitt"));
+		assertTrue(basey.getActor("Brad Pitt").getMovieNamesAsStrings().contains("Troy"));
+		assertTrue(basey.getMovieList().contains(basey.getMovie("Troy")));
+		assertTrue(basey.getActorList().contains(basey.getActor("Brad Pitt")));
+		
 		
 	}
 
