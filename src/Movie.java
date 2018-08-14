@@ -18,6 +18,7 @@ public class Movie {
 			}
 		}
 	}
+	//Getters and Setters
 	public String getName() {
 		return name;
 	}
@@ -30,10 +31,13 @@ public class Movie {
 	public void setRating(double rating) {
 		this.rating = rating;
 	}
-
 	public ArrayList<Actor> getActors() {
 		return actors;
 	}
+	/**
+	 * A helper method
+	 * @return a list of actors' names as Strings is returned
+	 */
 	public ArrayList<String> getActorNamesAsStrings() {
 		ArrayList<String> actorNames = new ArrayList<>();
 		for (Actor a : this.actors) {
@@ -45,6 +49,7 @@ public class Movie {
 	public String toString() {
 		return  name + ", actors: " + actorNamesAsString() + ", rating: " + rating ;
 	}
+	//For printing out stuff on the console in test purposes
 	public String actorNamesAsString() {
 		StringBuilder s = new StringBuilder();
 		for (Actor a : this.actors) {
@@ -52,7 +57,7 @@ public class Movie {
 		}
 		return s.toString();
 	}
-
+	//For the purposes of this exercise, it is sufficient that the Movies match in name to be considered the same object, therefore equals and hashcode are overridden to avoid duplicates
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -60,7 +65,6 @@ public class Movie {
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		return result;
 	}
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -82,7 +86,4 @@ public class Movie {
 		}
 		return true;
 	}
-
-
-
 }

@@ -1,19 +1,13 @@
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Scanner;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -25,14 +19,49 @@ public class MovieDatabase {
 		this.movieList = new ArrayList<Movie>();
 		this.actorList = new ArrayList<Actor>();
 	}
+	// Getters and Setters
+	public ArrayList<Movie> getMovieList() {
+		return this.movieList;
+	}
+	public ArrayList<Actor> getActorList() {
+		return this.actorList;
+	}
+	public void setMovieList(ArrayList<Movie> movieList) {
+		this.movieList = movieList;
+	}
+	public void setActorList(ArrayList<Actor> actorList) {
+		this.actorList = actorList;
+	}
 	/**
-	 * A method that takes in the name of a movie and a list of actors for that movie. If a movie is already in the database, it ignored. If the movie is a new movie, a Movie object is created and added to the movieList. If any actors are new, they will be added to the actorList. 
+	 * Searches the database's movielist for a specific movie by its name.
+	 * @param name
+	 * @return the found Movie object is returned, if nothing is found by the parameter, null is returned.
+	 */
+	public Movie getMovie(String name) {
+		for(Movie m : this.movieList) {
+			if(m.getName().equalsIgnoreCase(name)) {
+				return m;
+			}
+		}
+		return null;
+	}
+	/**
+	 * A method that takes in the name of a movie and a list of actors for that
+	 * movie. If a movie is already in the database, it ignored. If the movie is a
+	 * new movie, a Movie object is created and added to the movieList. If any
+	 * actors are new, they will be added to the actorList.
+	 * 
 	 * @param name
 	 * @param actors
 	 */
 	public void addMovie(String name, String[] actors) {
 		if(!getMovieListAsStringsOfNames().contains(name)) {
 			movieList.add(new Movie(name, actors));
+			for (String s : actors) {
+				if(!getActorListAsStringsOfNames().contains(s)) {
+					actorList.add(new Actor(s, new String[] {name}));
+				}
+			}
 		}
 	}
 	/**
@@ -86,22 +115,8 @@ public class MovieDatabase {
 					best = m.getName();
 				}
 			}
-
 		}
 		return best;
-	}
-	// Getters and Setters
-	public ArrayList<Movie> getMovieList() {
-		return this.movieList;
-	}
-	public ArrayList<Actor> getActorList() {
-		return this.actorList;
-	}
-	public void setMovieList(ArrayList<Movie> movieList) {
-		this.movieList = movieList;
-	}
-	public void setActorList(ArrayList<Actor> actorList) {
-		this.actorList = actorList;
 	}
 	/**
 	 * A helper method that reads the data from an external text file and splits it according to a delimiter
@@ -140,10 +155,10 @@ public class MovieDatabase {
 	 * @param actorAsMap is received containing the Actor's name and movie names
 	 */
 	public void makeActorsAndMoviesOutOfData(HashMap<String, String[]> actorAsMap) {
-		Set set = actorAsMap.entrySet();
-		Iterator iterator = set.iterator();
+		Set<?> set = actorAsMap.entrySet();
+		Iterator<?> iterator = set.iterator();
 		while(iterator.hasNext()) {
-			Map.Entry mentry = (Map.Entry)iterator.next();
+			Map.Entry<?, ?> mentry = (Map.Entry<?, ?>)iterator.next();
 			this.actorList.add(new Actor((String)(mentry.getKey()), (String[])mentry.getValue()));
 			for (String movie : (String[])mentry.getValue()) {
 				if (!getMovieListAsStringsOfNames().contains(movie)) {
@@ -152,12 +167,27 @@ public class MovieDatabase {
 			}
 		}
 	}
+	/**
+	 * A helper method for testing and validating by a movie's name (e.g. when creating new movies that are given in (String name, String[] actors) -form)
+	 * @return a list of Movie names as Strings is returned
+	 */
 	public ArrayList<String> getMovieListAsStringsOfNames() {
 		ArrayList<String> movieTitles = new ArrayList<>();
 		for (Movie m : movieList) {
 			movieTitles.add(m.getName());
 		}
 		return movieTitles;
+	}
+	/**
+	 * A helper method for testing and validating by an actor's name
+	 * @return a list of Movie names as Strings is returned
+	 */
+	public ArrayList<String> getActorListAsStringsOfNames() {
+		ArrayList<String> actorNames = new ArrayList<>();
+		for (Actor a : actorList) {
+			actorNames.add(a.getName());
+		}
+		return actorNames;
 	}
 	/**
 	 * A helper method that reads the data from an external text file and splits it according to a delimiter
@@ -213,18 +243,6 @@ public class MovieDatabase {
 			}
 		}
 	}
-	public void connectActorsWithMovies() {
-		for (Actor a : this.actorList) {
-			for (Movie m : this.movieList) {
-				for (Actor ma : m.getActors()) {
-					if (ma.equals(a)) {
-						
-						a.movies.add(m);
-					}
-				}
-			}
-		}
-	}
 
 	public static void main(String[] args) throws Exception {
 
@@ -234,16 +252,17 @@ public class MovieDatabase {
 		movieDatabase.setRatingsFromData(movieDatabase.mapRatingsFileData(movieDatabase.dataFromRatingsFile()));
 
 		movieDatabase.connectMoviesWithActors();
-		//movieDatabase.connectActorsWithMovies();
 
 
 /*		for (Movie a : movieDatabase.movieList) {
 			System.out.println(a);
 		}*/
 
-		for (Actor a : movieDatabase.actorList) {
-			System.out.println(a);
-		}
+/*		for (Actor a : movieDatabase.actorList) {
+			System.out.println(a.getName() + a.movies);
+		}*/
+		
+		System.out.println(movieDatabase.getMovie("Fools Rush In"));
 
 
 		
